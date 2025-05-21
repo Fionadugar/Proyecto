@@ -1,15 +1,20 @@
-# Asistente Virtual IES Gregorio Prieto
+# 🧠 Asistente Virtual IES Gregorio Prieto
 
-## Requisitos
-- Node.js
-- AnythingLLM en red local
+Aplicación web que permite conversar con una IA (AnythingLLM) simulando un asistente virtual para el instituto.  
+Desarrollada con **HTML, CSS, JavaScript y Node.js**.
 
-## Instalación
-1. Clona el proyecto
-2. Configura el archivo `.env` con la URL y API Key de AnythingLLM
-3. Ejecuta `iniciar-backend.bat`
+---
 
-## Uso
-- Abre `frontend/index.html` en tu navegador
-- Escribe un mensaje y conversa con la IA
+## 📦 Requisitos
 
+- Node.js instalado
+- Servidor AnythingLLM funcionando en red local
+- (Opcional) XAMPP para servir el frontend desde `htdocs`
+
+---
+
+## ⚙️ Instalación (modo local)
+
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/fionadugar/Proyecto.git
