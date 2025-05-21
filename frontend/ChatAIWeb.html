@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto MIA</title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=cOWLrjR7aAWlCTBk9MPULewt-iJKXOZ5YHDsWiJAiJhdyYZrYSEZkXXbxZdEg1qKi_Ck-cOKvqvHsKtd_WZ_DgDKx5XJCeWkoHWsQOCO2mwDZcMriB1Wd7gFMImkhyH7CUr5NU2W9F0Q-olN3eqP7Bx1w3Lwgxg56hHuu15oOjEL8GWYT0apYuF1Ac6iI6OB" charset="UTF-8"></script></head>
+<body>
+    <div class="chat-container">
+        <div class="messages" id="messages"></div>
+        <input type="text" id="userInput" placeholder="Escribe un mensaje...">
+        <button id="sendBtn" disabled>Enviar</button>
+    </div>
+
+    <script>
+        const messagesDiv = document.getElementById("messages");
+        const userInput = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+
+        userInput.addEventListener("input", () => {
+            sendBtn.disabled = userInput.value.trim() === "";
+        });
+
+        sendBtn.addEventListener("click", async () => {
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
+            
+            addMessage(userMessage, "user");
+            userInput.value = "";
+            sendBtn.disabled = true;
+            
+            try {
+                const response = await fetch("http://localhost:3001/api/v1/workspace/dam/thread/Prueba/Chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer Q3BD5JY-ASFMBXQ-G5CC63S-P8DXSFY"
+                    },
+                    body: JSON.stringify({ message: userMessage, mode: "chat", user_id: 1 })
+                });
+                const data = await response.json();
+                
+                if (data.textResponse) {
+                    addMessage(data.textResponse, "bot");
+                } else {
+                    addMessage("Error en la respuesta del servidor", "bot");
+                }
+            } catch (error) {
+                addMessage("Error de conexión", "bot");
+            }
+        });
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", sender);
+            messageDiv.textContent = text;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
